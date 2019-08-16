@@ -63,7 +63,7 @@ function readFileContent(file) {
 }
 function Kelik(){
     let logcat = document.getElementById("logcat").value;
-    logcat = logcat.replace(/^((?!crash|error|fail|fatal|not found).)*$/gmi, "");
+    logcat = logcat.replace(/^((?!crash|error|fail|fatal|not found|missing).)*$/gmi, "");
     logcat = logcat.replace(/^\s*$(?:\r\n?|\n)/gm, "");
     document.getElementById("logcat").value = logcat
 }
