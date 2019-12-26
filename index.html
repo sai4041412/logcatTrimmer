@@ -63,7 +63,7 @@ function readFileContent(file) {
 }
 function Kelik(){
     let logcat = document.getElementById("logcat").value;
-    logcat = logcat.replace(/^(?!.*(crash|error|fail|fatal|not found|missing)).*$\n/gmi, "");
+    logcat = logcat.replace(/^(?!(fail|not found|error|fatal|missing|crash)).*?$\n/gmi, "");
     document.getElementById("logcat").value = logcat
 }
 // Function to download data to a file
