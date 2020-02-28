@@ -17,11 +17,11 @@
                 </div>
                 <div class="input-group">
                     <div class="input-group-prepend">
-                        <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+                        <span class="input-group-text">Upload</span>
                     </div>
                     <div class="custom-file">
-                        <input type="file" class="custom-file-input" id="input-file" aria-describedby="inputGroupFileAddon01">
-                        <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                        <input type="file" class="custom-file-input" id="input-file">
+                        <label class="custom-file-label">Choose file</label>
                     </div>
                 </div>
                 <br>
@@ -33,35 +33,22 @@
             </div>
         </div>
     </div>
-    <link rel="stylesheet" href="bootstrap-clean.min.css">
-    <script src="https://cdn.staticaly.com/gh/bgrins/filereader.js/master/filereader.js"></script>
     <script>
-        document.getElementById('input-file')
-            .addEventListener('change', getFile)
+        var input = document.getElementById("input-file");
+        var output = document.getElementById("logcat");
 
-        function getFile(event) {
-            const input = event.target
-            if ('files' in input && input.files.length > 0) {
-                placeFileContent(
-                    document.getElementById('logcat'),
-                    input.files[0])
+        input.addEventListener("change", function() {
+            if (this.files && this.files[0]) {
+                var myFile = this.files[0];
+                var reader = new FileReader();
+
+                reader.addEventListener('load', function(e) {
+                    output.textContent = e.target.result;
+                });
+
+                reader.readAsBinaryString(myFile);
             }
-        }
-
-        function placeFileContent(target, file) {
-            readFileContent(file).then(content => {
-                target.value = content
-            }).catch(error => console.log(error))
-        }
-
-        function readFileContent(file) {
-            const reader = new FileReader()
-            return new Promise((resolve, reject) => {
-                reader.onload = event => resolve(event.target.result)
-                reader.onerror = error => reject(error)
-                reader.readAsText(file)
-            })
-        }
+        });
 
         function Kelik() {
             let logcat = document.getElementById("logcat").value;
@@ -96,6 +83,7 @@
                 download(document.getElementById("logcat").value, dd + mm + '-Logcat.txt', 'text/plain')
             }
     </script>
+    <link rel="stylesheet" href="bootstrap-clean.min.css">
 </body>
 
 </html>
